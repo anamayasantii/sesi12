@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Latihan Json Edit Data</title>
+</head>
+<body>
+    
+    <div>
+        Nama
+        <input type="text" id="txNAMA"><br>
+        Email
+        <input type="email" id="txEMAIL"><br>
+        Username
+        <input type="text" id="txUNAME"><br>
+        Action
+        <input type="text" id="txACTION"><br>
+    </div>
+
+    <script>
+        const qstring = window.location.search;
+
+        const pr = new URLSearchParams(qstring);
+        let prid = pr.get('id');
+
+        const jsHTTP = new XMLHttpRequest();
+        let cx = "https://webpro.ptov.my.id/api/curduser.php?aksi=get&q="+prid;
+        console.log(cx);
+        jsHTTP.open("GET",cx);
+        jsHTTP.send();
+        jsHTTP.onload = function(){
+            const dta = JSON.parse(this.responseText);
+            document.getElementById("txNAMA").value = dta.isi[0][0]; 
+            document.getElementById("txEMAIL").value = dta.isi[0][1];
+            document.getElementById("txUNAME").value = dta.isi[0][2];
+            document.getElementById("txACTION").value = dta.isi[0][3];
+            console.log(dta);
+        }
+        // console.log(prid);
+    </script>
+</body>
+</html>
